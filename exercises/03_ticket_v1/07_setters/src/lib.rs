@@ -10,27 +10,42 @@ pub struct Ticket {
 }
 
 impl Ticket {
-    pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
+    fn title_is_valid(new_title: String) -> bool {
+        if new_title.is_empty() {
             panic!("Title cannot be empty");
         }
-        if title.len() > 50 {
+        if new_title.len() > 50 {
             panic!("Title cannot be longer than 50 bytes");
         }
-        if description.is_empty() {
+        true
+    }
+
+    fn description_is_valid(new_description: String) -> bool {
+        if new_description.is_empty() {
             panic!("Description cannot be empty");
         }
-        if description.len() > 500 {
+        if new_description.len() > 500 {
             panic!("Description cannot be longer than 500 bytes");
         }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
+        true
+    }
+
+    fn status_is_valid(new_status: String) -> bool {
+        if new_status != "To-Do" && new_status != "In Progress" && new_status != "Done" {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
+        true
+    }
 
-        Ticket {
-            title,
-            description,
-            status,
+    pub fn new(title: String, description: String, status: String) -> Ticket {
+        if title_is_valid(title) && description_is_valid(description) && status_is_valid(status) {
+            return Ticket {
+                title,
+                description,
+                status,
+            }
+        } else {
+            panic!("Creating ticket failed")
         }
     }
 
@@ -44,6 +59,18 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, new_title: String) {
+        self.title = new_title;
+    }
+
+    pub fn set_description(&mut self, new_description: String) {
+        self.description = new_description;
+    }
+
+    pub fn set_status(&mut self, new_status: String) {
+        self.status = new_status;
     }
 }
 
