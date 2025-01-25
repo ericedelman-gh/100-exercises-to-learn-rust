@@ -13,7 +13,7 @@ pub fn factorial(n: u32) -> u32 {
         i = i - 1;
     }
 
-    answer;
+    answer
 }
 
 #[cfg(test)]
